@@ -2,11 +2,15 @@ const characters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O",
 "/"];
 const passwordLength = 15;
 
-function generatePassword() {
+function generateSecurePassword() {
     let password = "";
     let randomIndex;
+    const randomIntegers = new Uint32Array(passwordLength);
+
+    window.crypto.getRandomValues(randomIntegers);
+
     for (let i = 0; i < passwordLength; i++) {
-        randomIndex = Math.floor(Math.random() * characters.length);
+        randomIndex = randomIntegers[i] % characters.length;
         password += characters[randomIndex];
     }
 
@@ -14,8 +18,8 @@ function generatePassword() {
 }
 
 function putPasswords() {
-    document.getElementById("first-password").textContent = generatePassword();
-    document.getElementById("second-password").textContent = generatePassword();
+    document.getElementById("first-password").textContent = generateSecurePassword();
+    document.getElementById("second-password").textContent = generateSecurePassword();
 }
 
 
